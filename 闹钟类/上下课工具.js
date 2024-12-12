@@ -4,6 +4,18 @@ function playmusic(path) {
     // 让音乐播放完
     sleep(media.getMusicDuration());
 }
+// 输出进度条
+function printProgressBar(current, total) {
+    console.show(true);
+    const percentage = (current / total) * 100;
+    const progress = Math.round(percentage / 2); // 每个字符代表2%的进度
+    const bar = '='.repeat(progress) + ' '.repeat(50 - progress); // 进度条长度为50个字符
+    console.clear() // 清除当前行
+        // console.cursorTo(0); // 光标移到行首
+    console.log(`Progress: [${bar}]${percentage}%`);
+}
+const totalSteps = 100;
+
 // 上课计时器
 function class_start() {
     var storage = init_all(); //数据库链接代码
@@ -11,14 +23,23 @@ function class_start() {
     // 上课计时器线程
     var thread = threads.start(function() {
         // 在子线程执行的定时器
-        var id = setInterval(function() {
-            i++;
-            log("计时器开始：" + i * 5 + "秒");
-        }, 5000);
+
+
+        // var id = setInterval(function() {
+        //     i++;
+        //     log("计时器开始：" + i * 5 + "秒");
+        // }, 5000);
+        for (let step = 0; step <= totalSteps; step++) {
+            printProgressBar(step, totalSteps);
+            // 模拟任务进度，实际应用中可以是异步操作
+            // 这里使用setTimeout来模拟异步操作
+            sleep(15000);
+        }
+        console.hide();
         setTimeout(function() {
             clearInterval(id);
             thread.interrupt();
-        }, 120 * 1000);
+        }, 1500 * 1000);
     });
     playmusic("tool/QQ音乐@435157609@钢琴曲上课铃声@纯音乐.mp3");
     thread.join();
@@ -42,26 +63,36 @@ function class_end() {
         callApi("lifeup://api/complete?name=休息奖励");
         log("number为3");
         number = number - 3;
-        var number4 = 90;
+        var number4 = 900;
     } else if (number < 3 && number != 0) {
         log("number为小于三而且不等于0");
-        var number4 = 80;
+        var number4 = 300;
         callApi("lifeup://api/complete?name=休息奖励");
     } else if (number > 3) {
-        var number4 = 90;
+        var number4 = 900;
         callApi("lifeup://api/complete?name=休息奖励");
         callApi("lifeup://api/complete?name=休息奖励");
         callApi("lifeup://api/complete?name=休息奖励");
         log("number大于3");
         number = number - 3;
     }
-    // 上课计时器线程
+    // 下课计时器线程
     var thread_end = threads.start(function() {
         // 在子线程执行的定时器
-        var id_end = setInterval(function() {
-            i++;
-            log("计时器开始：" + i * 5 + "秒");
-        }, 5000);
+
+
+        // var id_end = setInterval(function() {
+        //     i++;
+        //     log("计时器开始：" + i * 5 + "秒");
+        // }, 5000);
+        for (let step = 0; step <= totalSteps; step++) {
+            printProgressBar(step, totalSteps);
+            // 模拟任务进度，实际应用中可以是异步操作
+            // 这里使用setTimeout来模拟异步操作
+            sleep(number4 * 10);
+        }
+
+        console.hide();
         setTimeout(function() {
             clearInterval(id_end);
             thread_end.interrupt();
