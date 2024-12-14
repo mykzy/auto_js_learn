@@ -25,16 +25,18 @@ function class_start() {
         // 在子线程执行的定时器
 
 
-        // var id = setInterval(function() {
-        //     i++;
-        //     log("计时器开始：" + i * 5 + "秒");
-        // }, 5000);
-        for (let step = 0; step <= totalSteps; step++) {
+        var id = setInterval(function() {
+            i++;
+            // log("计时器开始：" + i * 15 + "秒");
             printProgressBar(step, totalSteps);
-            // 模拟任务进度，实际应用中可以是异步操作
-            // 这里使用setTimeout来模拟异步操作
-            sleep(15000);
-        }
+        }, 15000);
+        // for (let step = 0; step <= totalSteps; step++) {
+
+        //     printProgressBar(step, totalSteps);
+        //     // 模拟任务进度，实际应用中可以是异步操作
+        //     // 这里使用setTimeout来模拟异步操作
+        //     sleep(15000);
+        // }
         console.hide();
         setTimeout(function() {
             clearInterval(id);
@@ -81,16 +83,17 @@ function class_end() {
         // 在子线程执行的定时器
 
 
-        // var id_end = setInterval(function() {
-        //     i++;
-        //     log("计时器开始：" + i * 5 + "秒");
-        // }, 5000);
-        for (let step = 0; step <= totalSteps; step++) {
+        var id_end = setInterval(function() {
+            i++;
+            log("计时器开始：" + i * 5 + "秒");
             printProgressBar(step, totalSteps);
-            // 模拟任务进度，实际应用中可以是异步操作
-            // 这里使用setTimeout来模拟异步操作
-            sleep(number4 * 10);
-        }
+        }, number4 * 10);
+        // for (let step = 0; step <= totalSteps; step++) {
+        //     printProgressBar(step, totalSteps);
+        //     // 模拟任务进度，实际应用中可以是异步操作
+        //     // 这里使用setTimeout来模拟异步操作
+        //     sleep(number4 * 10);
+        // }
 
         console.hide();
         setTimeout(function() {
