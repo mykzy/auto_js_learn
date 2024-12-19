@@ -18,18 +18,22 @@ const totalSteps = 100;
 
 // 上课计时器
 function class_start() {
+    // 上课计时器开启
+    callApi("anywhere://open?sid=2737");
     var storage = init_all(); //数据库链接代码
-    var i = 0;
+    var step = 0;
     // 上课计时器线程
     var thread = threads.start(function() {
         // 在子线程执行的定时器
 
 
         var id = setInterval(function() {
-            i++;
-            // log("计时器开始：" + i * 15 + "秒");
-            printProgressBar(step, totalSteps);
-        }, 15000);
+            if (step <= totalSteps) {
+                // log("计时器开始：" + i * 15 + "秒");
+                printProgressBar(step, totalSteps);
+                step++;
+            }
+        }, 1500 * 10);
         // for (let step = 0; step <= totalSteps; step++) {
 
         //     printProgressBar(step, totalSteps);
@@ -55,8 +59,10 @@ function class_start() {
 }
 // 下课计时器
 function class_end() {
+    // 下课（闲逛）计时器开启
+    callApi("anywhere://open?sid=1570");
     var storage = init_all(); //数据库链接代码
-    var i = 0;
+    var step = 0;
     var number = storage.get("上课次数(休息倒计时)");
     log(number);
     if (number == 3) {
@@ -84,9 +90,11 @@ function class_end() {
 
 
         var id_end = setInterval(function() {
-            i++;
-            log("计时器开始：" + i * 5 + "秒");
-            printProgressBar(step, totalSteps);
+            if (step <= totalSteps) {
+                // log("计时器开始：" + i * 15 + "秒");
+                printProgressBar(step, totalSteps);
+                step++;
+            }
         }, number4 * 10);
         // for (let step = 0; step <= totalSteps; step++) {
         //     printProgressBar(step, totalSteps);
