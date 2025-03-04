@@ -1,3 +1,34 @@
+function only_one() {
+  // 获取当前脚本引擎
+  let myEngine = engines.myEngine();
+  if (!myEngine) {
+    toast("无法获取当前脚本引擎，脚本退出");
+    exit();
+}
+  let myPath = myEngine.cwd()+ "/" + myEngine.source;
+  log(myPath);
+
+  // 获取所有正在运行的脚本引擎
+  let runningEngines = engines.all();
+  let myCount = 0;
+
+  // 检查是否有相同路径和文件名的脚本正在运行
+  runningEngines.forEach(function (engine) {
+    let path = engine.cwd() + "/" + engine.source;
+    if (path === myPath) {
+      myCount++;
+    }
+  });
+
+  // 如果发现多个实例，提示并退出
+  if (myCount > 1) {
+    toast("脚本已经在运行中，退出当前实例");
+    log("脚本已经在运行中，退出当前实例");
+    sleep(3000);
+    exit();
+  }
+}
+
 // 确保已开启无障碍服务和悬浮窗权限
 auto();
 // requestScreenCapture(); // 可选，如果需要截图检测控件
@@ -16,6 +47,8 @@ function callApi(str) {
   context.startActivity(intent);
 }
 
+
+only_one();
 // 监听通知栏消息（适用于系统通知类提示）
 events.observeNotification();
 events.on("notification", (n) => {
